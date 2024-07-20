@@ -11,9 +11,8 @@ import Login from './LoginComponent';
 import Myprofile from './MyprofileComponent';
 import Mycart from './MycartComponent';
 import Myorders from './MyordersComponent';
-import Gmap from './GmapComponent';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 
@@ -23,7 +22,6 @@ class Main extends Component {
   render() {
     return (
       <div className="body-customer">
-        <ToastContainer autoClose={3000} />
         <Menu />
         <Inform />
         <Routes>
@@ -38,8 +36,6 @@ class Main extends Component {
           <Route path='/myprofile' element={<Myprofile />} />
           <Route path='/mycart' element={<Mycart />} />
           <Route path='/myorders' element={<Myorders />} />
-          <Route path='/gmap' element={<Gmap />} />
-
         </Routes>
       </div>
     );

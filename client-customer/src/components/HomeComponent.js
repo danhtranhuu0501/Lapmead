@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Slider from './SliderComponent';
-
 
 
 class Home extends Component {
@@ -36,8 +34,6 @@ class Home extends Component {
     });
     return (
       <div>
-        <Slider />
-        <div style={{height: 30 }}/>
         <div className="align-center">
           <h2 className="text-center">NEW PRODUCTS</h2>
           {newprods}
@@ -48,7 +44,6 @@ class Home extends Component {
             {hotprods}
           </div>
           : <div />}
-          
       </div>
     );
   }

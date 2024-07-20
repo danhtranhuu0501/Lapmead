@@ -23,13 +23,9 @@ class Menu extends Component {
       <div className="border-bottom">
         <div className="float-left">
           <ul className="menu">
-            <li className="menu"><Link to='/gmap'>Gmap</Link></li>
             <li className="menu"><Link to='/'>Home</Link></li>
             {cates}
           </ul>
-        </div>
-        <div style={{ display: "inline" }} class="form-switch">
-          <input class="form-check-input" type="checkbox" onChange={this.ckbChangeMode} />&nbsp; Light / Dark mode
         </div>
         <div className="float-right">
           <form className="search">
@@ -46,12 +42,7 @@ class Menu extends Component {
     e.preventDefault();
     this.props.navigate('/product/search/' + this.state.txtKeyword);
   }
-  ckbChangeMode (e) {
-  if (e.target.checked) { 
-    document.documentElement.setAttribute('data-bs-theme', 'dark');
-  } else {                 
-      document.documentElement.setAttribute('data-bs-theme', 'light');
-  }                    }
+  
   componentDidMount() {
     this.apiGetCategories();
   }

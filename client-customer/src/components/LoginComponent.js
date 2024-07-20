@@ -2,8 +2,6 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
 import withRouter from '../utils/withRouter';
-import { toast} from 'react-toastify';
-
 
 class Login extends Component {
   static contextType = MyContext; // using this.context to access global state
@@ -48,8 +46,7 @@ class Login extends Component {
       const account = { username: username, password: password };
       this.apiLogin(account);
     } else {
-      // alert('Please input username and password');
-      toast.warning('Please input username and password')
+      alert('Please input username and password');
     }
   }
   // apis
@@ -60,11 +57,8 @@ class Login extends Component {
         this.context.setToken(result.token);
         this.context.setCustomer(result.customer);
         this.props.navigate('/home');
-        toast.success('Please input username and password')
-
       } else {
-        // alert(result.message);
-        toast.error(result.message);
+        alert(result.message);
       }
     });
   }
