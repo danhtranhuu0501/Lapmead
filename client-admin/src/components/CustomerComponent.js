@@ -123,12 +123,6 @@ class Customer extends Component {
     this.apiGetCustomers();
   }
   // event-handlers
-  lnkEmailClick(item) {
-    this.apiGetCustomerSendmail(item._id);
-  }
-  lnkDeactiveClick(item) {
-    this.apiPutCustomerDeactive(item._id, item.token);
-  }
   trCustomerClick(item) {
     this.setState({ orders: [], order: null });
     this.apiGetOrdersByCustID(item._id);
@@ -136,27 +130,13 @@ class Customer extends Component {
   trOrderClick(item) {
     this.setState({ order: item });
   }
-  
+  lnkDeactiveClick(item) {
+    this.apiPutCustomerDeactive(item._id, item.token);
+  }
+  lnkEmailClick(item) {
+    this.apiGetCustomerSendmail(item._id);
+  }
   // apis
-  apiGetCustomerSendmail(id) {
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.get('/api/admin/customers/sendmail/' + id, config).then((res) => {
-      const result = res.data;
-      alert(result.message);
-    });
-  }
-  apiPutCustomerDeactive(id, token) {
-    const body = { token: token };
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.put('/api/admin/customers/deactive/' + id, body, config).then((res) => {
-      const result = res.data;
-      if (result) {
-        this.apiGetCustomers();
-      } else {
-        alert('SORRY BABY!');
-      }
-    });
-  }
   apiGetCustomers() {
     const config = { headers: { 'x-access-token': this.context.token } };
     axios.get('/api/admin/customers', config).then((res) => {
@@ -171,6 +151,24 @@ class Customer extends Component {
       this.setState({ orders: result });
     });
   }
-  
+  apiPutCustomerDeactive(id, token) {
+    const body = { token: token };
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios.put('/api/admin/customers/deactive/' + id, body, config).then((res) => {
+      const result = res.data;
+      if (result) {
+        this.apiGetCustomers();
+      } else {
+        alert('SORRY BABY!');
+      }
+    });
+  }
+  apiGetCustomerSendmail(id) {
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios.get('/api/admin/customers/sendmail/' + id, config).then((res) => {
+      const result = res.data;
+      alert(result.message);
+    });
+  }
 }
 export default Customer;

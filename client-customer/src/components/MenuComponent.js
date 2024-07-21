@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import withRouter from '../utils/withRouter';
 
-
-
 class Menu extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +21,8 @@ class Menu extends Component {
       <div className="border-bottom">
         <div className="float-left">
           <ul className="menu">
-            <li className="menu"><Link to='/'>Home</Link></li>
+          <li className="menu"><Link to='/gmap'>Gmap</Link></li>
+          <li className="menu"><Link to='/'>Home</Link></li>
             {cates}
           </ul>
         </div>
@@ -32,20 +31,29 @@ class Menu extends Component {
             <input type="search" placeholder="Enter keyword" className="keyword" value={this.state.txtKeyword} onChange={(e) => { this.setState({ txtKeyword: e.target.value }) }} />
             <input type="submit" value="SEARCH" onClick={(e) => this.btnSearchClick(e)} />
           </form>
+          <div style={{ display: "inline" }} class="form-switch">
+          <input class="form-check-input" type="checkbox" onChange={this.ckbChangeMode} />&nbsp; Light / Dark mode
+        </div>
         </div>
         <div className="float-clear" />
       </div>
-    );
+    ); 
   }
   // event-handlers
   btnSearchClick(e) {
     e.preventDefault();
     this.props.navigate('/product/search/' + this.state.txtKeyword);
   }
-  
   componentDidMount() {
     this.apiGetCategories();
   }
+  ckbChangeMode (e) {
+    if (e.target.checked) { 
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+    } else {                 
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+  }
+}  
   // apis
   apiGetCategories() {
     axios.get('/api/customer/categories').then((res) => {

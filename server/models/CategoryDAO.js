@@ -1,5 +1,6 @@
 require('../utils/MongooseUtil');
 const Models = require('./Models');
+const { selectByCount } = require('./ProductDAO');
 
 const CategoryDAO = {
   async selectAll() {
@@ -22,10 +23,14 @@ const CategoryDAO = {
     const result = await Models.Category.findByIdAndDelete(_id);
     return result;
   },
-
   async selectByID(_id) {
     const category = await Models.Category.findById(_id).exec();
     return category;
+  },
+  async selectByCount() {
+    const query = {};
+    const noCategories = await Models.Category.find(query).count().exec();
+    return noCategories;
   }
 };
 module.exports = CategoryDAO;

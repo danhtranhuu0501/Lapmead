@@ -7,13 +7,11 @@ const ProductDAO = {
     const noProducts = await Models.Product.find(query).count().exec();
     return noProducts;
   },
-  
   async selectBySkipLimit(skip, limit) {
     const query = {};
     const products = await Models.Product.find(query).skip(skip).limit(limit).exec();
     return products;
   },
-
   async insert(product) {
     const mongoose = require('mongoose');
     product._id = new mongoose.Types.ObjectId();
@@ -21,7 +19,7 @@ const ProductDAO = {
     return result;
   },
   async update(product) {
-    const newvalues = { name: product.name, price: product.price, image: product.image, category: product.category };
+    const newvalues = { name: product.name, price: product.price, image: product.image, imageDetails: product.imageDetails, category: product.category };
     const result = await Models.Product.findByIdAndUpdate(product._id, newvalues, { new: true });
     return result;
   },
@@ -29,8 +27,6 @@ const ProductDAO = {
     const result = await Models.Product.findByIdAndDelete(_id);
     return result;
   },
-
-  
   async selectByID(_id) {
     const product = await Models.Product.findById(_id).exec();
     return product;
@@ -65,9 +61,11 @@ const ProductDAO = {
     const query = { name: { $regex: new RegExp(keyword, "i") } };
     const products = await Models.Product.find(query).exec();
     return products;
+  },
+  async selectByCount(){
+    const query = {};
+    const noProducts = await Models.Product.find(query).count().exec();
+    return noProducts;
   }
 };
-
-
-
 module.exports = ProductDAO;

@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import withRouter from '../utils/withRouter';
 import MyContext from '../contexts/MyContext';
 
-
 class ProductDetail extends Component {
   static contextType = MyContext; // using this.context to access global state
   constructor(props) {
     super(props);
     this.state = {
       product: null,
-      txtQuantity: 1
+      txtQuantity: 1,
+      imgSelected: null
     };
   }
   render() {
@@ -20,7 +20,19 @@ class ProductDetail extends Component {
         <div className="align-center">
           <h2 className="text-center">PRODUCT DETAILS</h2>
           <figure className="caption-right">
-            <img src={"data:image/jpg;base64," + prod.image} width="400px" height="400px" alt="" />
+            <div>
+              {this.state.imgSelected == null ? (
+                <img src={"data:image/jpg;base64," + prod.image} width="400px" height="400px" alt="" /> 
+              ) : (
+            <img src={"data:image/jpg;base64,"+this.state.imgSelected} width="400px" height="400px" alt="" />
+              )}
+            <div className="align-center">
+              {prod.imageDetails.map((image, index) => ( 
+                <img key={index} src={"data:image/jpg;base64," + image} width="100px" height="100px" alt=''
+                  onClick={() => this.setState({ ingSelected: image })} />
+              ))}
+              </div> 
+            </div>
             <figcaption>
               <form>
                 <table>
@@ -59,17 +71,6 @@ class ProductDetail extends Component {
     }
     return (<div />);
   }
-  componentDidMount() {
-    const params = this.props.params;
-    this.apiGetProduct(params.id);
-  }
-  // apis
-  apiGetProduct(id) {
-    axios.get('/api/customer/products/' + id).then((res) => {
-      const result = res.data;
-      this.setState({ product: result });
-    });
-  }
   // event-handlers
   btnAdd2CartClick(e) {
     e.preventDefault();
@@ -89,6 +90,17 @@ class ProductDetail extends Component {
     } else {
       alert('Please input quantity');
     }
+  }
+  componentDidMount() {
+    const params = this.props.params;
+    this.apiGetProduct(params.id);
+  }
+  // apis
+  apiGetProduct(id) {
+    axios.get('/api/customer/products/' + id).then((res) => {
+      const result = res.data;
+      this.setState({ product: result });
+    });
   }
 }
 export default withRouter(ProductDetail);

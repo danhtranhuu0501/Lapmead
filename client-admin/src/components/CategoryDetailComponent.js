@@ -29,9 +29,9 @@ class CategoryDetail extends Component {
               <tr>
                 <td></td>
                 <td>
-                  <input type="submit" value="ADD NEW" onClick={(e) => this.btnAddClick(e)} />
-                  <input type="submit" value="UPDATE" onClick={(e) => this.btnUpdateClick(e)} />
-                  <input type="submit" value="DELETE" onClick={(e) => this.btnDeleteClick(e)} />
+                    <input type="submit" value="ADD NEW" onClick={(e) => this.btnAddClick(e)} />
+                    <input type="submit" value="UPDATE" onClick={(e) => this.btnUpdateClick(e)} />                    
+                    <input type="submit" value="DELETE" onClick={(e) => this.btnDeleteClick(e)} />
                 </td>
               </tr>
             </tbody>
@@ -40,12 +40,7 @@ class CategoryDetail extends Component {
       </div>
     );
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.item !== prevProps.item) {
-      this.setState({ txtID: this.props.item._id, txtName: this.props.item.name });
-    }
-  }
-  // event-handlers
+
   btnAddClick(e) {
     e.preventDefault();
     const name = this.state.txtName;
@@ -69,8 +64,20 @@ class CategoryDetail extends Component {
       }
     });
   }
- // event-handlers
- btnUpdateClick(e) {
+  apiGetCategories() {
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios.get('/api/admin/categories', config).then((res) => {
+      const result = res.data;
+      this.props.updateCategories(result);
+    });
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.item !== prevProps.item) {
+      this.setState({ txtID: this.props.item._id, txtName: this.props.item.name });
+    }
+  }
+  
+  btnUpdateClick(e) {
     e.preventDefault();
     const id = this.state.txtID;
     const name = this.state.txtName;
@@ -93,9 +100,7 @@ class CategoryDetail extends Component {
         alert('SORRY BABY!');
       }
     });
-  }
-
-  // event-handlers
+}
   btnDeleteClick(e) {
     e.preventDefault();
     if (window.confirm('ARE YOU SURE?')) {
@@ -118,16 +123,6 @@ class CategoryDetail extends Component {
       } else {
         alert('SORRY BABY!');
       }
-    });
-  }
-
-  
-
-  apiGetCategories() {
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.get('/api/admin/categories', config).then((res) => {
-      const result = res.data;
-      this.props.updateCategories(result);
     });
   }
 }

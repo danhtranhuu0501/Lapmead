@@ -11,17 +11,19 @@ import Login from './LoginComponent';
 import Myprofile from './MyprofileComponent';
 import Mycart from './MycartComponent';
 import Myorders from './MyordersComponent';
-
-
-
-
-
-
+import Gmap from './GmapComponent';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Resetpwd from './ResetpwdComponent';
+import axios from 'axios';
+import MyContext from '../contexts/MyContext';
 
 class Main extends Component {
+  static contextType = MyContext;
   render() {
     return (
-      <div className="body-customer">
+        <div className="body-customer">
+          <ToastContainer autoClose={3000} />
         <Menu />
         <Inform />
         <Routes>
@@ -36,9 +38,24 @@ class Main extends Component {
           <Route path='/myprofile' element={<Myprofile />} />
           <Route path='/mycart' element={<Mycart />} />
           <Route path='/myorders' element={<Myorders />} />
+          <Route path='/gmap' element={<Gmap />} />
+          <Route path='/resetpwd' element={<Resetpwd />} />
         </Routes>
       </div>
     );
+  }
+  componentDidMount() {
+    const token = localStorage.getItem('customer_token');
+    if (token) this.apiGetAccount(token);
+  }
+  //apis
+  apiGetAccount(token) {
+    const config = { headers: { 'x-access-token': token } };
+    axios.get('/api/customer/account', config).then((res) => {
+      const result = res.data;
+      this.context.setToken(token);
+      this.context.setCustomer(result);
+    });
   }
 }
 export default Main;

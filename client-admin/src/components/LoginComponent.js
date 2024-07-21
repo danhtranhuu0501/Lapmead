@@ -51,6 +51,10 @@ class Login extends Component {
       alert('Please input username and password');
     }
   }
+  componentDidMount(){
+    const token = localStorage.getItem('admin_token');
+    if (token) this.apiGetAccount(token);
+  }
   // apis
   apiLogin(account) {
     axios.post('/api/admin/login', account).then((res) => {
@@ -58,9 +62,18 @@ class Login extends Component {
       if (result.success === true) {
         this.context.setToken(result.token);
         this.context.setUsername(account.username);
+        localStorage.setItem('admin_token', result.token);
       } else {
         alert(result.message);
       }
+    });
+  }
+  apiGetAccount(token) {
+    const config = { headers: { 'x-access-token': token} };
+    axios.get('/api/admin/account', config).then((res) => {
+      const result = res.data;
+      this.context.setToken(token);
+      this.context.setUsername(result.username);
     });
   }
 }

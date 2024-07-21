@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
 
-
-
 class Inform extends Component {
   static contextType = MyContext; // using this.context to access global state
   render() {
@@ -16,9 +14,9 @@ class Inform extends Component {
           <div>Hello <b>{this.context.customer.name}</b> | <Link to='/home' onClick={() => this.lnkLogoutClick()}>Logout</Link> | <Link to='/myprofile'>My profile</Link> | <Link to='/myorders'>My orders</Link></div>
         }
       </div>
-        <div className="float-right">
-          <Link to='/mycart'>My cart</Link> have <b>{this.context.mycart.length}</b> items
-        </div>
+      <div className="float-right">
+        <Link to='/mycart'>My cart</Link> have <b>{this.context.mycart.length}</b> items
+      </div>
         <div className="float-clear" />
       </div>
     );
@@ -28,7 +26,7 @@ class Inform extends Component {
     this.context.setToken('');
     this.context.setCustomer(null);
     this.context.setMycart([]);
+    localStorage.removeItem('customer_token');
   }
 }
-
 export default Inform;

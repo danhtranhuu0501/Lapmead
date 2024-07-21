@@ -50,7 +50,16 @@ class Mycart extends Component {
       </div>
     );
   }
-  // event-handlers
+    // event-handlers
+    lnkRemoveClick(id) {
+        const mycart = this.context.mycart;
+        const index = mycart.findIndex(x => x.product._id === id);
+        if (index !== -1) { // found, remove item
+          mycart.splice(index, 1);
+          this.context.setMycart(mycart);
+        }
+    }
+    // event-handlers
   lnkCheckoutClick() {
     if (window.confirm('ARE YOU SURE?')) {
       if (this.context.mycart.length > 0) {
@@ -67,14 +76,6 @@ class Mycart extends Component {
       }
     }
   }
-  lnkRemoveClick(id) {
-    const mycart = this.context.mycart;
-    const index = mycart.findIndex(x => x.product._id === id);
-    if (index !== -1) { // found, remove item
-      mycart.splice(index, 1);
-      this.context.setMycart(mycart);
-    }
-  }
   // apis
   apiCheckout(total, items, customer) {
     const body = { total: total, items: items, customer: customer };
@@ -89,6 +90,6 @@ class Mycart extends Component {
         alert('SORRY BABY!');
       }
     });
-  }
+}
 }
 export default withRouter(Mycart);

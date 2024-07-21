@@ -24,6 +24,13 @@ class Product extends Component {
           <td>{new Date(item.cdate).toLocaleString()}</td>
           <td>{item.category.name}</td>
           <td><img src={"data:image/jpg;base64," + item.image} width="100px" height="100px" alt="" /></td>
+          <td>
+            {item.imageDetails.length > 0 ? (
+              item.imageDetails.map((image, index) => (
+                <img key={index} src={"data:image/jpg;base64," + image} width="100px" height=" 100px" alt="" />
+            ))
+           ) : (<span>n/a</span>)} 
+           </td> 
         </tr>
       );
     });
@@ -47,6 +54,7 @@ class Product extends Component {
                 <th>Creation date</th>
                 <th>Category</th>
                 <th>Image</th>
+                <th>image details</th>
               </tr>
               {prods}
               <tr>
@@ -64,7 +72,6 @@ class Product extends Component {
   updateProducts = (products, noPages, curPage) => { // arrow-function
     this.setState({ products: products, noPages: noPages, curPage: curPage });
   }
-  
   componentDidMount() {
     this.apiGetProducts(this.state.curPage);
   }

@@ -5,17 +5,17 @@ import Login from './components/LoginComponent';
 import Main from './components/MainComponent';
 import { BrowserRouter } from 'react-router-dom';
 
-
 class App extends Component {
   render() {
     return (
       <MyProvider>
         <BrowserRouter>
-          <Main />
           <Login />
+          <Main />
         </BrowserRouter>
       </MyProvider>
     );
   }
 }
+
 export default App;
