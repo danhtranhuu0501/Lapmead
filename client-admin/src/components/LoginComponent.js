@@ -21,11 +21,11 @@ class Login extends Component {
               <tbody>
                 <tr>
                   <td>Username</td>
-                  <td><input type="text" value={this.state.txtUsername} onChange={(e) => { this.setState({ txtUsername: e.target.value }) }} /></td>
+                  <td><input type="text" placeholder="Enter username" value={this.state.txtUsername} onChange={(e) => { this.setState({ txtUsername: e.target.value }) }} /></td>
                 </tr>
                 <tr>
                   <td>Password</td>
-                  <td><input type="password" value={this.state.txtPassword} onChange={(e) => { this.setState({ txtPassword: e.target.value }) }} /></td>
+                  <td><input type="password" placeholder="Enter password" value={this.state.txtPassword} onChange={(e) => { this.setState({ txtPassword: e.target.value }) }} /></td>
                 </tr>
                 <tr>
                   <td></td>
